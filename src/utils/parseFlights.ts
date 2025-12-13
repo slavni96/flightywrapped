@@ -75,6 +75,10 @@ export function computeFlightStats(records: FlightRecord[]): FlightStats {
 
   const airlineCounts = new Map<string, number>();
   const aircraftCounts = new Map<string, number>();
+  const airlineMinutes = new Map<string, number>();
+
+  let shortestFlight: FlightStats['shortestFlight'];
+  let longestFlight: FlightStats['longestFlight'];
 
   records.forEach((record) => {
     if (record.airline) {
@@ -96,7 +100,32 @@ export function computeFlightStats(records: FlightRecord[]): FlightStats {
       lastYear = lastYear ? Math.max(lastYear, year) : year;
     }
 
-    totalMinutes += computeDurationMinutes(record);
+    const minutes = computeDurationMinutes(record);
+    totalMinutes += minutes;
+
+    if (minutes > 0) {
+      const existingShortest = shortestFlight?.minutes ?? Number.POSITIVE_INFINITY;
+      const existingLongest = longestFlight?.minutes ?? 0;
+      if (minutes < existingShortest) {
+        shortestFlight = {
+          flight: record.flight,
+          from: record.from,
+          to: record.to,
+          minutes,
+        };
+      }
+      if (minutes > existingLongest) {
+        longestFlight = {
+          flight: record.flight,
+          from: record.from,
+          to: record.to,
+          minutes,
+        };
+      }
+      if (record.airline) {
+        airlineMinutes.set(record.airline, (airlineMinutes.get(record.airline) ?? 0) + minutes);
+      }
+    }
   });
 
   const topAirlines = Array.from(airlineCounts.entries())
@@ -113,6 +142,12 @@ export function computeFlightStats(records: FlightRecord[]): FlightStats {
     share: flights ? Math.round((count / flights) * 100) : 0,
   }));
 
+  const topAirlineByTimeEntry = Array.from(airlineMinutes.entries()).sort((a, b) => b[1] - a[1])[0];
+  const topAirlineByTime =
+    topAirlineByTimeEntry && topAirlineByTimeEntry[1] > 0
+      ? { name: topAirlineByTimeEntry[0], minutes: topAirlineByTimeEntry[1] }
+      : undefined;
+
   return {
     flights,
     airlines: airlinesSet.size,
@@ -120,11 +155,16 @@ export function computeFlightStats(records: FlightRecord[]): FlightStats {
     airports: airportsSet.size,
     routes: routesSet.size,
     totalHours: Number((totalMinutes / 60).toFixed(1)),
+    totalMinutes: Math.round(totalMinutes),
+    averageFlightMinutes: flights ? Math.round(totalMinutes / flights) : 0,
     firstYear,
     lastYear,
     topAirlines,
     topAircraft,
     topAircraftCount,
     aircraftBreakdown,
+    shortestFlight,
+    longestFlight,
+    topAirlineByTime,
   };
 }

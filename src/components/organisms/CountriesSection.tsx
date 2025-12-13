@@ -13,12 +13,11 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
   return (
     <section
       id={containerId}
-      className="relative overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
+      className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-[#3b0aff] via-[#4b1fff] to-[#2a0b74] p-6 text-white shadow-card lg:p-10 max-w-3xl mx-auto"
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-white to-transparent" />
       <div className="relative z-10 flex flex-col gap-6">
         <div className="flex items-center justify-center">
-          <Badge tone="primary">World Reach</Badge>
+          <Badge tone="neutral" className="bg-white/20 border-white/30 text-white">World Reach</Badge>
         </div>
         <div className="flex flex-col items-center gap-3">
           <SectionHeader
@@ -26,12 +25,12 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
             title={`${stats.airports} Airports`}
             subtitle="See how far you reached this year."
           />
-          <Badge tone="primary" className="bg-primary/20 text-primary">
+          <Badge tone="neutral" className="bg-white/15 border-white/30 text-white">
             {stats.routes} routes mapped
           </Badge>
           <div className="relative w-full max-w-xl">
-            <div className="absolute inset-0 rounded-full border border-slate-200" />
-            <div className="absolute inset-6 rounded-full border border-dashed border-slate-200" />
+            <div className="absolute inset-0 rounded-full border border-white/20" />
+            <div className="absolute inset-6 rounded-full border border-dashed border-white/30" />
             <div
               className="aspect-square w-full rounded-full bg-center bg-contain bg-no-repeat opacity-90"
               style={{ backgroundImage: `url(${MAP_IMAGE})` }}

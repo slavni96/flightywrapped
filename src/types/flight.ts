@@ -19,10 +19,15 @@ export type FlightStats = {
   airports: number;
   routes: number;
   totalHours: number;
+  totalMinutes: number;
+  averageFlightMinutes: number;
   firstYear?: number;
   lastYear?: number;
   topAirlines: Array<{ name: string; flights: number }>;
   topAircraft?: string;
   topAircraftCount?: number;
   aircraftBreakdown: Array<{ name: string; flights: number; share: number }>;
+  shortestFlight?: { flight: string; from: string; to: string; minutes: number };
+  longestFlight?: { flight: string; from: string; to: string; minutes: number };
+  topAirlineByTime?: { name: string; minutes: number };
 };

@@ -13,7 +13,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
   return (
     <section
       id={containerId}
-      className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
+      className="rounded-3xl bg-gradient-to-b from-[#3b0aff] via-[#4b1fff] to-[#2a0b74] p-6 text-white shadow-card lg:p-10 max-w-3xl mx-auto"
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
@@ -34,7 +34,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
           {[fleet.oldest, fleet.newest].map((plane, index) => (
             <div
               key={plane.model}
-              className="group relative overflow-hidden rounded-2xl border border-white/70 bg-white"
+              className="group relative overflow-hidden rounded-2xl border border-white/50 bg-white/10"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div
@@ -66,26 +66,26 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
           ))}
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/70 bg-white p-5">
-          <h3 className="text-lg font-bold text-slate-900">Fleet Composition</h3>
+        <div className="space-y-4 rounded-2xl border border-white/40 bg-white/10 p-5">
+          <h3 className="text-lg font-bold text-white">Fleet Composition</h3>
           <div className="flex flex-col gap-3">
             {stats.aircraftBreakdown.length === 0 && (
-              <p className="text-sm text-slate-600">Add data with aircraft types to see a split.</p>
+              <p className="text-sm text-white/80">Add data with aircraft types to see a split.</p>
             )}
             {stats.aircraftBreakdown.map((maker) => (
               <div
                 key={maker.name}
-                className="flex items-center gap-4 rounded-xl border border-white/70 bg-white p-4"
+                className="flex items-center gap-4 rounded-xl border border-white/40 bg-white/10 p-4"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/20 text-primary-foreground">
                   <Icon name="flight" />
                 </div>
                 <div className="flex-1">
                   <div className="mb-1 flex items-end justify-between">
-                    <span className="font-semibold text-slate-900">{maker.name}</span>
-                    <span className="text-lg font-bold text-slate-900">
+                    <span className="font-semibold text-white">{maker.name}</span>
+                    <span className="text-lg font-bold text-white">
                       {maker.flights}
-                      <span className="ml-1 text-xs font-normal text-slate-500">flts</span>
+                      <span className="ml-1 text-xs font-normal text-white/70">flts</span>
                     </span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
@@ -100,7 +100,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
           </div>
         </div>
 
-        <p className="text-center text-slate-600">
+        <p className="text-center text-white/80">
           From the roar of the classics to modern wide-bodies, your fleet is rendered instantly from
           your data.
         </p>
