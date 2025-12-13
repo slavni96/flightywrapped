@@ -17,15 +17,15 @@ export function AnnualSummary({ stats, scopeLabel, subtitleText, containerId }: 
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl bg-gradient-to-b from-[#3b0aff] via-[#4b1fff] to-[#2a0b74] p-6 text-white shadow-card lg:p-10 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-6 text-slate-900 shadow-card lg:p-10 max-w-3xl mx-auto"
     >
-      <div className="flex flex-col items-center text-center gap-3">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] opacity-90">Flighty ✈</p>
-        <h2 className="text-4xl font-extrabold leading-tight">
+      <div className="flex flex-col items-center text-center gap-2">
+        <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500">Flighty ✈</p>
+        <h2 className="text-3xl font-extrabold leading-tight">
           {scopeLabel ?? `${stats.firstYear ?? '—'} In The Air`}
         </h2>
-        <p className="text-lg font-semibold leading-snug max-w-xl">
-          {subtitleText ?? `This year, you took ${stats.flights} flights across ${stats.routes} routes.`}
+        <p className="text-base font-semibold leading-snug max-w-xl text-slate-700">
+          {subtitleText ?? `This year, you took ${stats.flights} flights across ${stats.routes} routes and ${stats.airports} airports.`}
         </p>
       </div>
 

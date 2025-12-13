@@ -11,9 +11,9 @@ export function Footer() {
             <p className="text-slate-900">© 2025</p>
           </div>
         </div>
-        <a href="https://slavni96.github.io/" className="hover:text-primary">
-          Creator
-        </a>
+        <span className="text-sm text-slate-700">
+          Made with ❤️ from Italy during a flight TPE → PVG → MXP
+        </span>
       </div>
     </footer>
   );

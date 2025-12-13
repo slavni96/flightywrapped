@@ -13,7 +13,7 @@ export function AirlineSection({ stats, containerId }: AirlineSectionProps) {
   return (
     <section
       id={containerId}
-      className="rounded-3xl bg-gradient-to-b from-[#3b0aff] via-[#4b1fff] to-[#2a0b74] p-6 text-white shadow-card lg:p-10 max-w-3xl mx-auto"
+      className="rounded-3xl border border-white/70 bg-white p-6 text-slate-900 shadow-card lg:p-10 max-w-3xl mx-auto"
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
         <SectionHeader
