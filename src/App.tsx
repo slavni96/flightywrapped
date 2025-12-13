@@ -29,6 +29,19 @@ function App() {
 
   const currentYear = 2025;
 
+  const focusInsightsSection = () => {
+    setTimeout(() => {
+      const section = document.getElementById('insights');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.tabIndex = -1;
+        section.focus({ preventScroll: true });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }, 0);
+  };
+
   const shareSectionImage = async (sectionId: string, label: string) => {
     try {
       const html2canvas = (await import('html2canvas')).default;
@@ -143,9 +156,7 @@ function App() {
       setStatsYear(computedYear);
       setStoryIndex(0);
       setView('insights');
-      setTimeout(() => {
-        document.getElementById('insights')?.scrollIntoView({ behavior: 'smooth' });
-      }, 0);
+      focusInsightsSection();
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Unable to parse the CSV file.';
       setError(message);
@@ -164,9 +175,7 @@ function App() {
     if (statsYear) {
       setView('insights');
       setStoryIndex(0);
-      setTimeout(() => {
-        document.getElementById('insights')?.scrollIntoView({ behavior: 'smooth' });
-      }, 0);
+      focusInsightsSection();
     }
   };
 
