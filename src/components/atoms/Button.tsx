@@ -2,7 +2,7 @@ import { type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { cn } from '../../utils/cn';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'ghost' | 'soft';
+  variant?: 'primary' | 'ghost' | 'soft' | 'muted';
   fullWidth?: boolean;
   icon?: ReactNode;
 };
@@ -22,6 +22,8 @@ export function Button({
       'bg-white/10 text-white border border-white/10 hover:bg-white/15 active:scale-[0.99]',
     soft:
       'bg-primary/15 text-primary border border-primary/20 hover:bg-primary/20',
+    muted:
+      'bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200 active:scale-[0.99]',
   };
 
   return (

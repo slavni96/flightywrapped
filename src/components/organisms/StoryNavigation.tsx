@@ -22,8 +22,7 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
       </div>
       <div className="flex items-center gap-2 w-full sm:w-auto sm:justify-end sm:flex-1">
         <Button
-          variant="ghost"
-          className="bg-slate-100 text-slate-700 hover:bg-slate-200"
+          variant="muted"
           icon={<Icon name="arrow_back" />}
           onClick={onPrev}
           disabled={current === 0}
