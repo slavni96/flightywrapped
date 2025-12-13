@@ -13,6 +13,12 @@ export function SocialProof() {
           subtitle="Join thousands of travelers visualizing their miles."
         />
         <AvatarStack avatars={travelerAvatars} extraLabel="+2k" />
+        <p className="text-sm text-slate-600 max-w-2xl">
+          All data comes from <a href="https://flighty.com/" className="text-primary hover:text-primary/80">flighty.com</a>.
+          This is just a fan homage by a happy user, inspired by a Reddit post about a Flighty vs Spotify Wrapped vibe (
+          <a href="https://www.reddit.com/r/flighty/comments/1pkufe3/flighty_wrapped_2025/" className="text-primary hover:text-primary/80">thread</a>).
+          Flighty already shows these stats in-app—I just wanted a fast way to share social-ready snapshots.
+        </p>
       </div>
     </section>
   );
