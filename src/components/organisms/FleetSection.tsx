@@ -19,7 +19,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionHeader
             align="center"
-            eyebrow="Fleet"
+            eyebrow="Flighty ✈"
             title="Your Fleet"
             subtitle="From classics to modern wide-bodies across your flights."
           />

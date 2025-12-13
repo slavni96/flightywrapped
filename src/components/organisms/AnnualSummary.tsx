@@ -1,4 +1,5 @@
 import { type FlightStats } from '../../types/flight';
+import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
 
 type AnnualSummaryProps = {
@@ -19,15 +20,15 @@ export function AnnualSummary({ stats, scopeLabel, subtitleText, containerId }: 
       id={containerId}
       className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
     >
-      <div className="flex flex-col items-center text-center gap-2">
-        <p className="text-xs font-bold uppercase tracking-[0.28em] text-slate-500">Flighty ✈</p>
-        <h2 className="text-2xl font-extrabold leading-tight sm:text-3xl">
-          {scopeLabel ?? `${stats.firstYear ?? '—'} In The Air`}
-        </h2>
-        <p className="text-sm sm:text-base font-semibold leading-snug max-w-xl text-slate-700">
-          {subtitleText ?? `This year, you took ${stats.flights} flights across ${stats.routes} routes and ${stats.airports} airports.`}
-        </p>
-      </div>
+      <SectionHeader
+        align="center"
+        eyebrow="Flighty ✈"
+        title={scopeLabel ?? `${stats.firstYear ?? '—'} In The Air`}
+        subtitle={
+          subtitleText ??
+          `This year, you took ${stats.flights} flights across ${stats.routes} routes and ${stats.airports} airports.`
+        }
+      />
 
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         <StatCard icon="flight_takeoff" title={`${stats.flights}`} subtitle="Flights">
