@@ -1,7 +1,6 @@
 import { type ChangeEvent } from 'react';
 import { Icon } from '../atoms/Icon';
 import { cn } from '../../utils/cn';
-import { Badge } from '../atoms/Badge';
 
 type UploadCardProps = {
   onFileSelected?: (file: File) => void;
@@ -31,7 +30,7 @@ export function UploadCard({
 
   return (
     <div className={cn('space-y-3', className)}>
-      <label className="group relative flex h-44 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-white/15 bg-white/5 transition-all hover:border-primary/50 hover:bg-primary/5 active:scale-[0.99]">
+      <label className="group relative flex h-44 w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-200 bg-white transition-all hover:border-primary/50 hover:bg-primary/5 active:scale-[0.99]">
         <input
           type="file"
           accept=".csv"
@@ -45,27 +44,26 @@ export function UploadCard({
             <Icon name="upload_file" className="text-3xl filled" />
           </div>
           <div>
-            <p className="text-lg font-bold text-white group-hover:text-primary transition-colors">
+            <p className="text-lg font-bold text-slate-900 group-hover:text-primary transition-colors">
               {isLoading ? 'Uploading...' : label}
             </p>
-            <p className="mt-1 text-sm text-white/60">
+            <p className="mt-1 text-sm text-slate-600">
               {isLoading ? 'Parsing CSV locally' : helperText}
             </p>
           </div>
         </div>
       </label>
       <div className="flex justify-center">
-        <button className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/15">
+        <a
+          href="#how-it-works"
+          className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition hover:bg-primary/15"
+        >
           <Icon name="help" className="text-[16px]" />
           {actionLabel}
-        </button>
+        </a>
       </div>
-      <Badge tone="success" className="gap-2">
-        <Icon name="shield_lock" className="text-[16px]" />
-        Local processing only
-      </Badge>
       {error && (
-        <p className="text-sm text-amber-300">
+        <p className="text-sm text-amber-700">
           <Icon name="warning" className="mr-1 text-[16px]" /> {error}
         </p>
       )}

@@ -10,8 +10,8 @@ type FleetSectionProps = {
 
 export function FleetSection({ stats }: FleetSectionProps) {
   return (
-    <section className="rounded-3xl border border-white/5 bg-white/5 p-6 shadow-card backdrop-blur-lg lg:p-8">
-        <div className="flex flex-col gap-6">
+    <section className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8">
+      <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionHeader
             align="center"
@@ -20,9 +20,9 @@ export function FleetSection({ stats }: FleetSectionProps) {
             subtitle="From classics to modern wide-bodies. The layout adapts from stacked on mobile to split cards on desktop."
           />
           <div className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-slate-200" />
             {stats.firstYear ?? '—'} to {stats.lastYear ?? '—'}
-            <div className="h-px flex-1 bg-white/10" />
+            <div className="h-px flex-1 bg-slate-200" />
           </div>
         </div>
 
@@ -30,7 +30,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
           {[fleet.oldest, fleet.newest].map((plane, index) => (
             <div
               key={plane.model}
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-white/5"
+              className="group relative overflow-hidden rounded-2xl border border-white/70 bg-white"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               <div
@@ -50,7 +50,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
                   </span>
                 </div>
                 <div>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-slate-200">
                     {index === 0 ? 'Oldest flown' : 'Most modern'}
                   </p>
                   <h3 className="text-2xl font-bold leading-tight text-white">
@@ -62,26 +62,26 @@ export function FleetSection({ stats }: FleetSectionProps) {
           ))}
         </div>
 
-        <div className="space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
-          <h3 className="text-lg font-bold text-white">Fleet Composition</h3>
+        <div className="space-y-4 rounded-2xl border border-white/70 bg-white p-5">
+          <h3 className="text-lg font-bold text-slate-900">Fleet Composition</h3>
           <div className="flex flex-col gap-3">
             {stats.aircraftBreakdown.length === 0 && (
-              <p className="text-sm text-white/60">Add a CSV with aircraft types to see a split.</p>
+              <p className="text-sm text-slate-600">Add a CSV with aircraft types to see a split.</p>
             )}
             {stats.aircraftBreakdown.map((maker) => (
               <div
                 key={maker.name}
-                className="flex items-center gap-4 rounded-xl border border-white/5 bg-white/5 p-4"
+                className="flex items-center gap-4 rounded-xl border border-white/70 bg-white p-4"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/5 text-white">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                   <Icon name="flight" />
                 </div>
                 <div className="flex-1">
                   <div className="mb-1 flex items-end justify-between">
-                    <span className="font-semibold text-white">{maker.name}</span>
-                    <span className="text-lg font-bold text-white">
+                    <span className="font-semibold text-slate-900">{maker.name}</span>
+                    <span className="text-lg font-bold text-slate-900">
                       {maker.flights}
-                      <span className="ml-1 text-xs font-normal text-white/60">flts</span>
+                      <span className="ml-1 text-xs font-normal text-slate-500">flts</span>
                     </span>
                   </div>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
@@ -96,7 +96,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
           </div>
         </div>
 
-        <p className="text-center text-white/60">
+        <p className="text-center text-slate-600">
           From the roar of the classics to modern wide-bodies, your fleet is rendered instantly from
           your CSV.
         </p>

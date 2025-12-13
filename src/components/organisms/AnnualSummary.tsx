@@ -11,11 +11,11 @@ export function AnnualSummary({ stats }: AnnualSummaryProps) {
   return (
     <section
       id="stats"
-      className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#101922] via-[#0f172a] to-[#0a1016] p-6 shadow-card lg:p-10"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-10"
     >
       <div className="mb-6 flex items-center justify-between">
         <ProgressIndicators total={4} activeIndex={0} />
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-white/50">Stories</span>
+        <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Stories</span>
       </div>
 
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -26,21 +26,21 @@ export function AnnualSummary({ stats }: AnnualSummaryProps) {
             title={`${stats.flights} Flights`}
             subtitle="Flights parsed from your CSV. Adaptive layout for every screen."
           />
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/50">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             {stats.airlines} airlines • {stats.routes} routes • {stats.airports} airports
           </p>
         </div>
 
         <div className="flex flex-col items-center gap-6">
           <div className="relative flex h-64 w-64 items-center justify-center">
-            <div className="absolute inset-0 rounded-full border border-white/10" />
-            <div className="absolute inset-0 scale-125 rounded-full border border-dashed border-white/10" />
+            <div className="absolute inset-0 rounded-full border border-slate-200" />
+            <div className="absolute inset-0 scale-125 rounded-full border border-dashed border-slate-200" />
             <div className="absolute h-40 w-40 rounded-full border-2 border-primary/30" />
             <div className="absolute flex h-full w-full items-center justify-center">
               <div className="h-3 w-3 rounded-full bg-primary shadow-[0_0_15px_#137fec] animate-orbit" />
             </div>
-            <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full border border-white/10 bg-[#1c2936] shadow-2xl">
-              <span className="material-symbols-outlined text-4xl text-white/90">public</span>
+            <div className="relative z-10 flex h-24 w-24 items-center justify-center rounded-full border border-slate-200 bg-white shadow-2xl">
+              <span className="material-symbols-outlined text-4xl text-slate-800">public</span>
             </div>
           </div>
 

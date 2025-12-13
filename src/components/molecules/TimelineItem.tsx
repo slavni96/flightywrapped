@@ -21,17 +21,17 @@ export function TimelineItem({
       <div className="flex flex-col items-center">
         <div
           className={cn(
-            'flex h-8 w-8 items-center justify-center rounded-full text-sm text-white ring-4 ring-background-dark',
-            highlight ? 'bg-primary shadow-glow' : 'bg-white/10',
+            'flex h-8 w-8 items-center justify-center rounded-full text-sm text-slate-900 ring-4 ring-white',
+            highlight ? 'bg-primary text-white shadow-glow' : 'bg-slate-100',
           )}
         >
           <Icon name={icon} className="text-[18px]" />
         </div>
-        {!isLast && <div className="my-1 w-px flex-1 bg-white/10" />}
+        {!isLast && <div className="my-1 w-px flex-1 bg-slate-200" />}
       </div>
       <div className={cn('pb-8 pt-1', isLast && 'pb-0')}>
-        <p className="text-base font-semibold text-white">{title}</p>
-        <p className="mt-1 text-sm text-white/60 leading-snug">{description}</p>
+        <p className="text-base font-semibold text-slate-900">{title}</p>
+        <p className="mt-1 text-sm text-slate-600 leading-snug">{description}</p>
       </div>
     </div>
   );

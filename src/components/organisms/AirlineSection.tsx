@@ -10,7 +10,7 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
   const topAirline = stats.topAirlines[0];
 
   return (
-    <section className="rounded-3xl border border-white/5 bg-white/5 p-6 shadow-card backdrop-blur-lg lg:p-8">
+    <section className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8">
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
         <SectionHeader
           eyebrow="Airlines"
@@ -19,7 +19,7 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
         />
 
         <div className="space-y-6">
-          <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6">
+          <div className="relative overflow-hidden rounded-2xl border border-white/70 bg-white p-6">
             <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/10 blur-3xl" />
             {topAirline ? (
               <>
@@ -32,29 +32,29 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
                       <p className="text-xs font-bold uppercase tracking-widest text-primary">
                         Top airline
                       </p>
-                      <h3 className="text-2xl font-bold text-white leading-none">
+                      <h3 className="text-2xl font-bold text-slate-900 leading-none">
                         {topAirline.name}
                       </h3>
-                      <p className="text-sm text-white/60">Most frequent in your CSV</p>
+                      <p className="text-sm text-slate-600">Most frequent in your CSV</p>
                     </div>
                   </div>
                   <Icon name="workspace_premium" className="text-amber-400 text-3xl" />
                 </div>
-                <div className="mt-4 flex items-center gap-3 text-sm text-white/70">
+                <div className="mt-4 flex items-center gap-3 text-sm text-slate-700">
                   <Icon name="flight_takeoff" />
                   <span>{topAirline.flights} flights completed</span>
                 </div>
               </>
             ) : (
-              <p className="text-sm text-white/60">Upload a CSV to see your most flown airline.</p>
+              <p className="text-sm text-slate-600">Upload a CSV to see your most flown airline.</p>
             )}
           </div>
 
           <div className="space-y-4">
-            <p className="text-lg font-bold text-white">All airlines</p>
+            <p className="text-lg font-bold text-slate-900">All airlines</p>
             <div className="space-y-4">
               {stats.topAirlines.length === 0 && (
-                <p className="text-sm text-white/60">No airlines to show yet.</p>
+                <p className="text-sm text-slate-600">No airlines to show yet.</p>
               )}
               {stats.topAirlines.map((airline) => {
                 const percent = topAirline
@@ -63,12 +63,12 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
                 return (
                   <div key={airline.name} className="space-y-2">
                     <div className="flex items-end justify-between">
-                      <span className="font-semibold text-white">{airline.name}</span>
-                      <span className="text-sm text-white/60">{airline.flights} flights</span>
+                      <span className="font-semibold text-slate-900">{airline.name}</span>
+                      <span className="text-sm text-slate-600">{airline.flights} flights</span>
                     </div>
-                    <div className="h-3 w-full overflow-hidden rounded-full bg-white/10">
+                    <div className="h-3 w-full overflow-hidden rounded-full bg-slate-100">
                       <div
-                        className="h-full rounded-full bg-white/50"
+                        className="h-full rounded-full bg-primary/60"
                         style={{ width: `${percent}%` }}
                       />
                     </div>

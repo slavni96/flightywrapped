@@ -6,7 +6,7 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="rounded-3xl border border-white/5 bg-white/5 p-6 shadow-card backdrop-blur-lg lg:p-8"
+      className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
     >
       <div className="mb-8">
         <SectionHeader

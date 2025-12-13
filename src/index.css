@@ -6,19 +6,15 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    color-scheme: dark;
-  }
-
   * {
     @apply box-border;
   }
 
   body {
-    @apply bg-background-dark text-white antialiased font-display min-h-screen;
+    @apply bg-background-light text-slate-900 antialiased font-display min-h-screen;
     background-image: radial-gradient(circle at 20% 20%, rgba(19, 127, 236, 0.08), transparent 25%),
       radial-gradient(circle at 80% 10%, rgba(99, 102, 241, 0.08), transparent 20%),
-      linear-gradient(180deg, #0f172a 0%, #0a1016 100%);
+      linear-gradient(180deg, #f8fafc 0%, #eef2f7 100%);
   }
 
   a {
@@ -47,10 +43,10 @@
 
 @layer utilities {
   .glass {
-    @apply bg-white/5 border border-white/10 backdrop-blur-md;
+    @apply bg-white/70 border border-white/60 backdrop-blur-md shadow-md;
   }
 
   .card-surface {
-    @apply rounded-2xl border border-white/5 bg-white/5 shadow-card;
+    @apply rounded-2xl border border-white/70 bg-white shadow-card;
   }
 }

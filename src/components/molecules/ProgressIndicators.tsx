@@ -11,7 +11,7 @@ export function ProgressIndicators({ total, activeIndex = 0 }: ProgressIndicator
         return (
           <div
             key={index}
-            className={`h-1 flex-1 rounded-full ${isActive ? 'bg-primary shadow-[0_0_10px_rgba(19,127,236,0.5)]' : 'bg-white/20'}`}
+            className={`h-1 flex-1 rounded-full ${isActive ? 'bg-primary shadow-[0_0_10px_rgba(19,127,236,0.4)]' : 'bg-slate-200'}`}
           ></div>
         );
       })}

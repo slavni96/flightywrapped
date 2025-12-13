@@ -96,7 +96,7 @@ function App() {
       <main className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-6 md:px-6 lg:px-8">
         {view === 'landing' && (
           <>
-            <Hero stats={stats} onStart={scrollToUpload} />
+            <Hero onStart={scrollToUpload} />
             <UploadSection onFileSelected={handleUpload} isLoading={isLoading} error={error} />
             <HowItWorks />
             <PrivacySection />
@@ -106,13 +106,7 @@ function App() {
 
         {isInsights && stats && slides.length > 0 && (
           <section id="insights" className="flex flex-col gap-6">
-            <StoryNavigation
-              current={storyIndex}
-              total={slides.length}
-              onNext={goNext}
-              onPrev={goPrev}
-              onHome={goHome}
-            />
+            <StoryNavigation current={storyIndex} total={slides.length} onNext={goNext} onPrev={goPrev} />
             {slides[storyIndex]?.component}
           </section>
         )}
