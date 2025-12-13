@@ -24,7 +24,7 @@ export function AnnualSummary({ stats }: AnnualSummaryProps) {
             align="center"
             eyebrow={`${stats.firstYear ?? '—'} In The Air`}
             title={`${stats.flights} Flights`}
-            subtitle="Flights parsed from your CSV. Adaptive layout for every screen."
+            subtitle="Your year at a glance—miles, time, and routes ready to share."
           />
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             {stats.airlines} airlines • {stats.routes} routes • {stats.airports} airports

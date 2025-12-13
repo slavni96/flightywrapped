@@ -19,8 +19,14 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
         <ProgressIndicators total={total} activeIndex={current} />
       </div>
       <div className="flex items-center gap-2">
-        <Button variant="ghost" icon={<Icon name="arrow_back" />} onClick={onPrev} disabled={current === 0}>
-          Prev
+        <Button
+          variant="ghost"
+          className="bg-slate-100 text-slate-700 hover:bg-slate-200"
+          icon={<Icon name="arrow_back" />}
+          onClick={onPrev}
+          disabled={current === 0}
+        >
+          Back
         </Button>
         <Button
           variant="primary"

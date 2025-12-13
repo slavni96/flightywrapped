@@ -22,7 +22,7 @@ export function CountriesSection({ stats }: CountriesSectionProps) {
           <SectionHeader
             align="center"
             title={`${stats.airports} Airports`}
-            subtitle="Adaptive layout keeps the hero metric centered on any viewport."
+            subtitle="See how far you reached this year."
           />
           <Badge tone="primary" className="bg-primary/20 text-primary">
             {stats.routes} routes mapped

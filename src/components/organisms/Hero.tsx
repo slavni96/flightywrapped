@@ -46,7 +46,7 @@ export function Hero({ onStart }: HeroProps) {
           <div className="absolute bottom-4 left-4">
             <div className="inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-800 backdrop-blur-md shadow-sm">
               <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
-              Flighty Wrapped • Responsive
+              Flighty Wrapped • 2025
             </div>
           </div>
         </div>
