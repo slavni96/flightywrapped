@@ -1,5 +1,4 @@
 import { type FlightStats } from '../../types/flight';
-import { ProgressIndicators } from '../molecules/ProgressIndicators';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
 
@@ -15,11 +14,6 @@ export function AnnualSummary({ stats, scopeLabel, subtitleText }: AnnualSummary
       id="stats"
       className="overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-10"
     >
-      <div className="mb-6 flex items-center justify-between">
-        <ProgressIndicators total={4} activeIndex={0} />
-        <span className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">Stories</span>
-      </div>
-
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionHeader
@@ -52,6 +46,12 @@ export function AnnualSummary({ stats, scopeLabel, subtitleText }: AnnualSummary
             </StatCard>
             <StatCard icon="flight_takeoff" title={`${stats.flights}`} subtitle="Flights">
               Directly counted from your trips.
+            </StatCard>
+            <StatCard icon="public" title={`${stats.routes}`} subtitle="Routes">
+              Unique origin-destination pairs in this view.
+            </StatCard>
+            <StatCard icon="groups" title={`${stats.airlines}`} subtitle="Airlines">
+              Different carriers across your trips.
             </StatCard>
           </div>
         </div>

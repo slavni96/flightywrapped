@@ -17,7 +17,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
             align="center"
             eyebrow="Fleet"
             title="Your Fleet"
-            subtitle="From classics to modern wide-bodies. The layout adapts from stacked on mobile to split cards on desktop."
+            subtitle="From classics to modern wide-bodies across your flights."
           />
           <div className="flex items-center gap-4 text-sm font-semibold uppercase tracking-[0.2em] text-primary">
             <div className="h-px flex-1 bg-slate-200" />

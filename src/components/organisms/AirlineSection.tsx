@@ -15,7 +15,7 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
         <SectionHeader
           eyebrow="Airlines"
           title="Who You Flew With"
-          subtitle="Sorted by frequency, reusing the same progress bars across mobile and desktop."
+          subtitle="Your airlines ranked by how often you flew with them."
         />
 
         <div className="space-y-6">

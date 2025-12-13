@@ -16,7 +16,7 @@ export function AvatarStack({ avatars, extraLabel }: AvatarStackProps) {
           />
         ))}
         {extraLabel && (
-          <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-background-dark bg-white/10 text-xs font-bold text-white/70">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-background-dark bg-white text-xs font-bold text-slate-900">
             {extraLabel}
           </div>
         )}

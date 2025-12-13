@@ -18,7 +18,7 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
         </span>
         <ProgressIndicators total={total} activeIndex={current} />
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 sm:justify-end sm:flex-1">
         <Button
           variant="ghost"
           className="bg-slate-100 text-slate-700 hover:bg-slate-200"
