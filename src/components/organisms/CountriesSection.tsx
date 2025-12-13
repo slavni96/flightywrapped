@@ -6,11 +6,15 @@ const MAP_IMAGE = 'https://placeholder.pics/svg/600';
 
 type CountriesSectionProps = {
   stats: FlightStats;
+  containerId?: string;
 };
 
-export function CountriesSection({ stats }: CountriesSectionProps) {
+export function CountriesSection({ stats, containerId }: CountriesSectionProps) {
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8">
+    <section
+      id={containerId}
+      className="relative overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-white to-transparent" />
       <div className="relative z-10 flex flex-col gap-6">
         <div className="flex items-center justify-center">

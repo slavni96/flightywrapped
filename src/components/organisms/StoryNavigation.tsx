@@ -10,6 +10,8 @@ type StoryNavigationProps = {
 };
 
 export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigationProps) {
+  const isLast = current === total - 1;
+
   return (
     <div className="flex flex-col gap-4 rounded-2xl border border-white/70 bg-white p-4 shadow-card sm:flex-row sm:items-center sm:justify-between">
       <div className="flex flex-1 flex-col gap-2">
@@ -18,7 +20,7 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
         </span>
         <ProgressIndicators total={total} activeIndex={current} />
       </div>
-      <div className="flex items-center gap-2 sm:justify-end sm:flex-1">
+      <div className="flex items-center gap-2 w-full sm:w-auto sm:justify-end sm:flex-1">
         <Button
           variant="ghost"
           className="bg-slate-100 text-slate-700 hover:bg-slate-200"
@@ -28,14 +30,16 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
         >
           Back
         </Button>
-        <Button
-          variant="primary"
-          icon={<Icon name="arrow_forward" />}
-          onClick={onNext}
-          disabled={current === total - 1}
-        >
-          Next
-        </Button>
+        {!isLast && (
+          <Button
+            variant="primary"
+            className="ml-auto sm:ml-2"
+            icon={<Icon name="arrow_forward" />}
+            onClick={onNext}
+          >
+            Next
+          </Button>
+        )}
       </div>
     </div>
   );

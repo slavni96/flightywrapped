@@ -3,7 +3,7 @@ import { Button } from '../atoms/Button';
 import { Icon } from '../atoms/Icon';
 
 const HERO_IMAGE =
-  'https://lh3.googleusercontent.com/aida-public/AB6AXuBixsi6XoR35BexcuOwKbROvmE2n9l_gFIxrY4BlRI6lj3KmG3qrJgQHdN88anJVZCSjhEpU5ZeGdC9l4K7ZjqAb1DSse1haAJCRlyW79fQ_HtXNT5em70WDXfueViFIG3o9GnjwZJ18cYCOjWqn3aw4FSl9Xggz1i3hL7xppk1oAVJagXgVsjUPZwfVmykkEP__OWQWzdqmm63JU068hry9pWLPNsEJueVto64je8KaUT7rmdfg4mniAVwZ-tI3nDFflYaPI2Jltu0';
+  'https://framerusercontent.com/images/u2X2l3wPQAkEtfpHB5qLevPFM.png?width=860&height=692';
 
 type HeroProps = {
   onStart?: () => void;

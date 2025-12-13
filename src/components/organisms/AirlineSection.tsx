@@ -4,13 +4,17 @@ import { Icon } from '../atoms/Icon';
 
 type AirlineSectionProps = {
   stats: FlightStats;
+  containerId?: string;
 };
 
-export function AirlineSection({ stats }: AirlineSectionProps) {
+export function AirlineSection({ stats, containerId }: AirlineSectionProps) {
   const topAirline = stats.topAirlines[0];
 
   return (
-    <section className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8">
+    <section
+      id={containerId}
+      className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
+    >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
         <SectionHeader
           eyebrow="Airlines"

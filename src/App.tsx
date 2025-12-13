@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { parseFlightFile, computeFlightStats } from './utils/parseFlights';
 import { type FlightStats } from './types/flight';
 import { AirlineSection } from './components/organisms/AirlineSection';
@@ -13,7 +13,9 @@ import { SocialProof } from './components/organisms/SocialProof';
 import { UploadSection } from './components/organisms/UploadSection';
 import { Footer } from './components/organisms/Footer';
 import { StoryNavigation } from './components/organisms/StoryNavigation';
+import { FloatingShare } from './components/organisms/FloatingShare';
 import './index.css';
+import confetti from 'canvas-confetti';
 
 type View = 'landing' | 'insights';
 
@@ -27,20 +29,95 @@ function App() {
 
   const currentYear = 2025;
 
+  const shareSectionImage = async (sectionId: string, label: string) => {
+    try {
+      const html2canvas = (await import('html2canvas')).default;
+      const section = document.getElementById(sectionId);
+      if (!section) {
+        throw new Error('Section not found');
+      }
+      const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2 });
+      const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
+      if (!blob) {
+        throw new Error('Unable to capture image');
+      }
+      const fileName = `${label.replace(/\s+/g, '-').toLowerCase()}.png`;
+      const file = new File([blob], fileName, { type: 'image/png' });
+
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'Flighty Wrapped', text: label });
+      } else {
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+    } catch (err) {
+      console.error(err);
+      setError('Unable to share right now.');
+    }
+  };
+
   const slides = useMemo(() => {
     if (!statsYear || !statsAll) return [];
     return [
-      { id: 'summary', component: <AnnualSummary stats={statsYear} scopeLabel={`${currentYear} In The Air`} /> },
-      { id: 'reach', component: <CountriesSection stats={statsYear} /> },
-      { id: 'fleet', component: <FleetSection stats={statsYear} /> },
-      { id: 'airlines', component: <AirlineSection stats={statsYear} /> },
+      {
+        id: 'summary',
+        label: `${currentYear} summary`,
+        containerId: 'summary-section',
+        component: (
+          <AnnualSummary
+            stats={statsYear}
+            scopeLabel={`${currentYear} In The Air`}
+            containerId="summary-section"
+          />
+        ),
+      },
+      {
+        id: 'reach',
+        label: 'World reach',
+        containerId: 'reach-section',
+        component: (
+          <CountriesSection
+            stats={statsYear}
+            containerId="reach-section"
+          />
+        ),
+      },
+      {
+        id: 'fleet',
+        label: 'Fleet',
+        containerId: 'fleet-section',
+        component: (
+          <FleetSection
+            stats={statsYear}
+            containerId="fleet-section"
+          />
+        ),
+      },
+      {
+        id: 'airlines',
+        label: 'Airlines',
+        containerId: 'airlines-section',
+        component: (
+          <AirlineSection
+            stats={statsYear}
+            containerId="airlines-section"
+          />
+        ),
+      },
       {
         id: 'all-time',
+        label: 'All time',
+        containerId: 'alltime-section',
         component: (
           <AnnualSummary
             stats={statsAll}
             scopeLabel="All-time"
             subtitleText="Every flight you loaded, ready to share."
+            containerId="alltime-section"
           />
         ),
       },
@@ -107,6 +184,16 @@ function App() {
 
   const isInsights = view === 'insights';
 
+  useEffect(() => {
+    if (isInsights && slides.length > 0 && storyIndex === slides.length - 1) {
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [isInsights, slides.length, storyIndex]);
+
   return (
     <div className="min-h-screen">
       <Header
@@ -130,6 +217,14 @@ function App() {
           <section id="insights" className="flex flex-col gap-6">
             <StoryNavigation current={storyIndex} total={slides.length} onNext={goNext} onPrev={goPrev} />
             {slides[storyIndex]?.component}
+            <FloatingShare
+              onShare={() =>
+                shareSectionImage(
+                  slides[storyIndex]?.containerId ?? 'insights',
+                  slides[storyIndex]?.label ?? 'Flighty Wrapped',
+                )
+              }
+            />
           </section>
         )}
       </main>

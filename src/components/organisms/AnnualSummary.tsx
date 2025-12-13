@@ -6,12 +6,13 @@ type AnnualSummaryProps = {
   stats: FlightStats;
   scopeLabel?: string;
   subtitleText?: string;
+  containerId?: string;
 };
 
-export function AnnualSummary({ stats, scopeLabel, subtitleText }: AnnualSummaryProps) {
+export function AnnualSummary({ stats, scopeLabel, subtitleText, containerId }: AnnualSummaryProps) {
   return (
     <section
-      id="stats"
+      id={containerId}
       className="overflow-hidden rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-10"
     >
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">

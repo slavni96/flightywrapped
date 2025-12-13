@@ -6,11 +6,15 @@ import { cn } from '../../utils/cn';
 
 type FleetSectionProps = {
   stats: FlightStats;
+  containerId?: string;
 };
 
-export function FleetSection({ stats }: FleetSectionProps) {
+export function FleetSection({ stats, containerId }: FleetSectionProps) {
   return (
-    <section className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8">
+    <section
+      id={containerId}
+      className="rounded-3xl border border-white/70 bg-white p-6 shadow-card lg:p-8"
+    >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionHeader
