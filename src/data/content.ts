@@ -2,7 +2,7 @@ export const howItWorksSteps = [
   {
     icon: 'ios_share',
     title: 'Export from Flighty',
-    description: 'Settings → Export → All Data in the Flighty app.',
+    description: 'Settings -> Account Data -> Export Your Flights. You’ll receive an email with the CSV—save it and upload.',
   },
   {
     icon: 'cloud_upload',
