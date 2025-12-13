@@ -14,6 +14,11 @@ import { UploadSection } from './components/organisms/UploadSection';
 import { Footer } from './components/organisms/Footer';
 import { StoryNavigation } from './components/organisms/StoryNavigation';
 import { FloatingShare } from './components/organisms/FloatingShare';
+import { PunctualitySection } from './components/organisms/PunctualitySection';
+import { ItinerariesSection } from './components/organisms/ItinerariesSection';
+import { FrequencySection } from './components/organisms/FrequencySection';
+import { DurationSection } from './components/organisms/DurationSection';
+import { DisruptionSection } from './components/organisms/DisruptionSection';
 import './index.css';
 import confetti from 'canvas-confetti';
 
@@ -108,6 +113,36 @@ function App() {
         label: 'Airlines',
         containerId: 'airlines-section',
         component: <AirlineSection stats={activeStats} containerId="airlines-section" />,
+      },
+      {
+        id: 'punctuality',
+        label: 'Time & punctuality',
+        containerId: 'punctuality-section',
+        component: <PunctualitySection stats={activeStats} containerId="punctuality-section" />,
+      },
+      {
+        id: 'itineraries',
+        label: 'Itineraries & airports',
+        containerId: 'itineraries-section',
+        component: <ItinerariesSection stats={activeStats} containerId="itineraries-section" />,
+      },
+      {
+        id: 'frequency',
+        label: 'Frequency & dates',
+        containerId: 'frequency-section',
+        component: <FrequencySection stats={activeStats} containerId="frequency-section" />,
+      },
+      {
+        id: 'durations',
+        label: 'Durations',
+        containerId: 'durations-section',
+        component: <DurationSection stats={activeStats} containerId="durations-section" />,
+      },
+      {
+        id: 'disruptions',
+        label: 'Disruptions',
+        containerId: 'disruptions-section',
+        component: <DisruptionSection stats={activeStats} containerId="disruptions-section" />,
       },
     ];
   }, [selectedYear, statsAll, statsByYear]);

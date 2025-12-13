@@ -2,11 +2,22 @@ import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { Badge } from '../atoms/Badge';
 
-const MAP_IMAGE = 'https://placeholder.pics/svg/600';
+const MAP_IMAGE =
+  'https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/World_map_-_low_resolution.svg/1200px-World_map_-_low_resolution.svg.png';
 
 type CountriesSectionProps = {
   stats: FlightStats;
   containerId?: string;
+};
+
+const positionForCode = (code: string) => {
+  const normalized = code.padEnd(2, 'X').slice(0, 2).toUpperCase();
+  const letterValue = (ch: string) => Math.max(0, Math.min(25, ch.charCodeAt(0) - 65));
+  const lon = (letterValue(normalized[0]) / 25) * 360 - 180; // -180..180
+  const lat = 90 - (letterValue(normalized[1]) / 25) * 180; // 90..-90
+  const x = ((lon + 180) / 360) * 100;
+  const y = ((90 - lat) / 180) * 100;
+  return { x: Math.max(2, Math.min(98, x)), y: Math.max(2, Math.min(98, y)) };
 };
 
 export function CountriesSection({ stats, containerId }: CountriesSectionProps) {
@@ -34,8 +45,17 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
               aria-label="Abstract world map"
             />
             <div className="absolute inset-4 rounded-xl border border-primary/30 pointer-events-none" />
-            <span className="absolute top-1/3 right-1/4 h-3 w-3 rounded-full bg-primary shadow-[0_0_20px_rgba(19,127,236,0.5)]" />
-            <span className="absolute bottom-1/3 left-1/4 h-2 w-2 rounded-full bg-primary/70" />
+            {stats.airportCodes.map((code) => {
+              const { x, y } = positionForCode(code);
+              return (
+                <span
+                  key={code}
+                  className="absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_10px_rgba(19,127,236,0.6)]"
+                  style={{ left: `${x}%`, top: `${y}%` }}
+                  title={code}
+                />
+              );
+            })}
           </div>
           <p className="text-center text-slate-600">
             That’s your reach based on unique airport codes.

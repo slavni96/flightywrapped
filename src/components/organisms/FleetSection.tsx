@@ -89,7 +89,6 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
                       <span className="ml-1 text-xs font-normal text-slate-500">flts</span>
                     </span>
                   </div>
-                  <p className="text-xs text-slate-500">Avg age: {stats.topAircraftCount ?? 0} flights</p>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
                     <div
                       className={cn('h-full rounded-full', 'bg-primary')}
