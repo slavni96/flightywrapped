@@ -13,7 +13,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
   return (
     <section
       id={containerId}
-      className="rounded-3xl border border-white/70 bg-white p-6 text-slate-900 shadow-card lg:p-10 max-w-3xl mx-auto"
+      className="rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
@@ -60,6 +60,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
                   <h3 className="text-2xl font-bold leading-tight text-white">
                     {index === 0 ? plane.model : stats.topAircraft ?? plane.model}
                   </h3>
+                  <p className="text-sm text-white/70">{plane.year}</p>
                 </div>
               </div>
             </div>
@@ -88,6 +89,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
                       <span className="ml-1 text-xs font-normal text-slate-500">flts</span>
                     </span>
                   </div>
+                  <p className="text-xs text-slate-500">Avg age: {stats.topAircraftCount ?? 0} flights</p>
                   <div className="h-2 w-full overflow-hidden rounded-full bg-white/10">
                     <div
                       className={cn('h-full rounded-full', 'bg-primary')}

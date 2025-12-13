@@ -20,8 +20,9 @@ import confetti from 'canvas-confetti';
 type View = 'landing' | 'insights';
 
 function App() {
-  const [statsYear, setStatsYear] = useState<FlightStats | null>(null);
   const [statsAll, setStatsAll] = useState<FlightStats | null>(null);
+  const [statsByYear, setStatsByYear] = useState<Record<string, FlightStats>>({});
+  const [selectedYear, setSelectedYear] = useState<string>('all');
   const [view, setView] = useState<View>('landing');
   const [storyIndex, setStoryIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -74,16 +75,18 @@ function App() {
   };
 
   const slides = useMemo(() => {
-    if (!statsYear || !statsAll) return [];
+    const activeStats =
+      selectedYear === 'all' ? statsAll : statsByYear[selectedYear] ?? statsAll;
+    if (!activeStats) return [];
     return [
       {
         id: 'summary',
-        label: `${currentYear} summary`,
+        label: `${selectedYear === 'all' ? 'All time' : selectedYear} summary`,
         containerId: 'summary-section',
         component: (
           <AnnualSummary
-            stats={statsYear}
-            scopeLabel={`${currentYear} In The Air`}
+            stats={activeStats}
+            scopeLabel={selectedYear === 'all' ? 'All-time' : `${selectedYear} In The Air`}
             containerId="summary-section"
           />
         ),
@@ -92,50 +95,22 @@ function App() {
         id: 'reach',
         label: 'World reach',
         containerId: 'reach-section',
-        component: (
-          <CountriesSection
-            stats={statsYear}
-            containerId="reach-section"
-          />
-        ),
+        component: <CountriesSection stats={activeStats} containerId="reach-section" />,
       },
       {
         id: 'fleet',
         label: 'Fleet',
         containerId: 'fleet-section',
-        component: (
-          <FleetSection
-            stats={statsYear}
-            containerId="fleet-section"
-          />
-        ),
+        component: <FleetSection stats={activeStats} containerId="fleet-section" />,
       },
       {
         id: 'airlines',
         label: 'Airlines',
         containerId: 'airlines-section',
-        component: (
-          <AirlineSection
-            stats={statsYear}
-            containerId="airlines-section"
-          />
-        ),
-      },
-      {
-        id: 'all-time',
-        label: 'All time',
-        containerId: 'alltime-section',
-        component: (
-          <AnnualSummary
-            stats={statsAll}
-            scopeLabel="All-time"
-            subtitleText="Every flight you loaded, ready to share."
-            containerId="alltime-section"
-          />
-        ),
+        component: <AirlineSection stats={activeStats} containerId="airlines-section" />,
       },
     ];
-  }, [currentYear, statsAll, statsYear]);
+  }, [selectedYear, statsAll, statsByYear]);
 
   const handleUpload = async (file: File) => {
     setIsLoading(true);
@@ -146,14 +121,29 @@ function App() {
         throw new Error('No rows detected in the CSV.');
       }
       const computedAll = computeFlightStats(parsed);
-      const yearRecords = parsed.filter((record) => {
+
+      const grouped: Record<string, typeof parsed> = {};
+      parsed.forEach((record) => {
         const parsedDate = Date.parse(record.date);
-        if (Number.isNaN(parsedDate)) return false;
-        return new Date(parsedDate).getFullYear() === currentYear;
+        if (Number.isNaN(parsedDate)) return;
+        const year = new Date(parsedDate).getFullYear().toString();
+        if (!grouped[year]) grouped[year] = [];
+        grouped[year].push(record);
       });
-      const computedYear = computeFlightStats(yearRecords);
+      const yearStatsEntries = Object.entries(grouped).reduce<Record<string, FlightStats>>(
+        (acc, [year, list]) => {
+          acc[year] = computeFlightStats(list);
+          return acc;
+        },
+        {},
+      );
+
+      const defaultYear =
+        yearStatsEntries[currentYear]?.flights ? currentYear.toString() : Object.keys(grouped)[0] ?? 'all';
+
       setStatsAll(computedAll);
-      setStatsYear(computedYear);
+      setStatsByYear(yearStatsEntries);
+      setSelectedYear(defaultYear || 'all');
       setStoryIndex(0);
       setView('insights');
       focusInsightsSection();
@@ -172,7 +162,7 @@ function App() {
     }, 0);
   };
   const goInsights = () => {
-    if (statsYear) {
+    if (Object.keys(statsByYear).length || statsAll) {
       setView('insights');
       setStoryIndex(0);
       focusInsightsSection();
@@ -206,7 +196,7 @@ function App() {
   return (
     <div className="min-h-screen">
       <Header
-        hasData={Boolean(statsYear)}
+        hasData={Boolean(statsAll || Object.keys(statsByYear).length)}
         onGoHome={goHome}
         onGoInsights={goInsights}
         isOnInsights={isInsights}
@@ -222,9 +212,21 @@ function App() {
           </>
         )}
 
-        {isInsights && statsYear && slides.length > 0 && (
+        {isInsights && slides.length > 0 && (
           <section id="insights" className="flex flex-col gap-6">
-            <StoryNavigation current={storyIndex} total={slides.length} onNext={goNext} onPrev={goPrev} />
+            <StoryNavigation
+              current={storyIndex}
+              total={slides.length}
+              onNext={goNext}
+              onPrev={goPrev}
+              years={['all', ...Object.keys(statsByYear).sort((a, b) => Number(b) - Number(a))]}
+              selectedYear={selectedYear}
+              onYearChange={(year) => {
+                setSelectedYear(year);
+                setStoryIndex(0);
+                focusInsightsSection();
+              }}
+            />
             {slides[storyIndex]?.component}
             <FloatingShare
               onShare={() =>

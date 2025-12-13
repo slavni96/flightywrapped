@@ -7,9 +7,20 @@ type StoryNavigationProps = {
   total: number;
   onNext: () => void;
   onPrev: () => void;
+  years: string[];
+  selectedYear: string;
+  onYearChange: (year: string) => void;
 };
 
-export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigationProps) {
+export function StoryNavigation({
+  current,
+  total,
+  onNext,
+  onPrev,
+  years,
+  selectedYear,
+  onYearChange,
+}: StoryNavigationProps) {
   const isLast = current === total - 1;
 
   return (
@@ -19,6 +30,20 @@ export function StoryNavigation({ current, total, onNext, onPrev }: StoryNavigat
           Story mode
         </span>
         <ProgressIndicators total={total} activeIndex={current} />
+        <div className="flex flex-wrap items-center gap-2">
+          <label className="text-xs font-semibold text-slate-600">Year:</label>
+          <select
+            value={selectedYear}
+            onChange={(e) => onYearChange(e.target.value)}
+            className="rounded-full border border-slate-200 bg-white px-3 py-1 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year === 'all' ? 'All' : year}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       <div className="flex items-center gap-2 w-full sm:w-auto sm:justify-end sm:flex-1">
         <Button

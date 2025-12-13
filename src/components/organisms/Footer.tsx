@@ -12,7 +12,10 @@ export function Footer() {
           </div>
         </div>
         <span className="text-sm text-slate-700">
-          Made with ❤️ from Italy during a flight TPE → PVG → MXP
+          Made with ❤️ from Italy during a flight TPE → PVG → MXP · by{' '}
+          <a className="underline hover:text-primary" href="https://slavni96.github.io/">
+            slavni96
+          </a>
         </span>
       </div>
     </footer>
