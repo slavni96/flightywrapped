@@ -18,24 +18,34 @@ import './index.css';
 type View = 'landing' | 'insights';
 
 function App() {
-  const [stats, setStats] = useState<FlightStats | null>(null);
+  const [statsYear, setStatsYear] = useState<FlightStats | null>(null);
+  const [statsAll, setStatsAll] = useState<FlightStats | null>(null);
   const [view, setView] = useState<View>('landing');
   const [storyIndex, setStoryIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const slides = useMemo(
-    () =>
-      stats
-        ? [
-            { id: 'summary', component: <AnnualSummary stats={stats} /> },
-            { id: 'reach', component: <CountriesSection stats={stats} /> },
-            { id: 'fleet', component: <FleetSection stats={stats} /> },
-            { id: 'airlines', component: <AirlineSection stats={stats} /> },
-          ]
-        : [],
-    [stats],
-  );
+  const currentYear = 2025;
+
+  const slides = useMemo(() => {
+    if (!statsYear || !statsAll) return [];
+    return [
+      { id: 'summary', component: <AnnualSummary stats={statsYear} scopeLabel={`${currentYear} In The Air`} /> },
+      { id: 'reach', component: <CountriesSection stats={statsYear} /> },
+      { id: 'fleet', component: <FleetSection stats={statsYear} /> },
+      { id: 'airlines', component: <AirlineSection stats={statsYear} /> },
+      {
+        id: 'all-time',
+        component: (
+          <AnnualSummary
+            stats={statsAll}
+            scopeLabel="All-time"
+            subtitleText="Every flight you loaded, ready to share."
+          />
+        ),
+      },
+    ];
+  }, [currentYear, statsAll, statsYear]);
 
   const handleUpload = async (file: File) => {
     setIsLoading(true);
@@ -45,8 +55,15 @@ function App() {
       if (!parsed.length) {
         throw new Error('No rows detected in the CSV.');
       }
-      const computed = computeFlightStats(parsed);
-      setStats(computed);
+      const computedAll = computeFlightStats(parsed);
+      const yearRecords = parsed.filter((record) => {
+        const parsedDate = Date.parse(record.date);
+        if (Number.isNaN(parsedDate)) return false;
+        return new Date(parsedDate).getFullYear() === currentYear;
+      });
+      const computedYear = computeFlightStats(yearRecords);
+      setStatsAll(computedAll);
+      setStatsYear(computedYear);
       setStoryIndex(0);
       setView('insights');
       setTimeout(() => {
@@ -67,7 +84,7 @@ function App() {
     }, 0);
   };
   const goInsights = () => {
-    if (stats) {
+    if (statsYear) {
       setView('insights');
       setStoryIndex(0);
       setTimeout(() => {
@@ -92,7 +109,12 @@ function App() {
 
   return (
     <div className="min-h-screen">
-      <Header hasData={Boolean(stats)} onGoHome={goHome} onGoInsights={goInsights} isOnInsights={isInsights} />
+      <Header
+        hasData={Boolean(statsYear)}
+        onGoHome={goHome}
+        onGoInsights={goInsights}
+        isOnInsights={isInsights}
+      />
       <main className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-6 md:px-6 lg:px-8">
         {view === 'landing' && (
           <>
@@ -104,7 +126,7 @@ function App() {
           </>
         )}
 
-        {isInsights && stats && slides.length > 0 && (
+        {isInsights && statsYear && slides.length > 0 && (
           <section id="insights" className="flex flex-col gap-6">
             <StoryNavigation current={storyIndex} total={slides.length} onNext={goNext} onPrev={goPrev} />
             {slides[storyIndex]?.component}

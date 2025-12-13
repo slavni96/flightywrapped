@@ -16,7 +16,7 @@ export function PrivacySection() {
         <div className="space-y-1">
           <p className="text-sm font-bold text-emerald-800">On-device processing</p>
           <p className="text-sm text-emerald-700">
-            No external calls, no tracking. Just your CSV in your browser.
+            No external calls, no tracking. Everything stays on your device.
           </p>
         </div>
       </div>

@@ -16,8 +16,8 @@ export function UploadSection({ onFileSelected, isLoading, error }: UploadSectio
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
         <SectionHeader
           eyebrow="Local only"
-          title="Import Flighty .CSV"
-          subtitle="Tap to browse files. Parsing happens in your browser—no uploads."
+          title="Import Flighty data"
+          subtitle="Tap to browse files. Everything stays on your device."
         />
         <UploadCard onFileSelected={onFileSelected} isLoading={isLoading} error={error} />
       </div>

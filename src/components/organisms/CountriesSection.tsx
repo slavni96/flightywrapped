@@ -39,7 +39,7 @@ export function CountriesSection({ stats }: CountriesSectionProps) {
             <span className="absolute bottom-1/3 left-1/4 h-2 w-2 rounded-full bg-primary/70" />
           </div>
           <p className="text-center text-slate-600">
-            That’s your reach based on unique airport codes. Live counts update as soon as your CSV is parsed.
+            That’s your reach based on unique airport codes. Live counts update as soon as your data is loaded.
           </p>
         </div>
       </div>

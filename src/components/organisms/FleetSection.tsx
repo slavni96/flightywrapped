@@ -66,7 +66,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
           <h3 className="text-lg font-bold text-slate-900">Fleet Composition</h3>
           <div className="flex flex-col gap-3">
             {stats.aircraftBreakdown.length === 0 && (
-              <p className="text-sm text-slate-600">Add a CSV with aircraft types to see a split.</p>
+              <p className="text-sm text-slate-600">Add data with aircraft types to see a split.</p>
             )}
             {stats.aircraftBreakdown.map((maker) => (
               <div
@@ -98,7 +98,7 @@ export function FleetSection({ stats }: FleetSectionProps) {
 
         <p className="text-center text-slate-600">
           From the roar of the classics to modern wide-bodies, your fleet is rendered instantly from
-          your CSV.
+          your data.
         </p>
       </div>
     </section>

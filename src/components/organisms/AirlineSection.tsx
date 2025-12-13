@@ -35,7 +35,7 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
                       <h3 className="text-2xl font-bold text-slate-900 leading-none">
                         {topAirline.name}
                       </h3>
-                      <p className="text-sm text-slate-600">Most frequent in your CSV</p>
+                      <p className="text-sm text-slate-600">Most frequent in your trips</p>
                     </div>
                   </div>
                   <Icon name="workspace_premium" className="text-amber-400 text-3xl" />
@@ -46,7 +46,7 @@ export function AirlineSection({ stats }: AirlineSectionProps) {
                 </div>
               </>
             ) : (
-              <p className="text-sm text-slate-600">Upload a CSV to see your most flown airline.</p>
+              <p className="text-sm text-slate-600">Upload your data to see your most flown airline.</p>
             )}
           </div>
 

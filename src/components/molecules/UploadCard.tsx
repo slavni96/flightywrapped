@@ -15,7 +15,7 @@ type UploadCardProps = {
 export function UploadCard({
   onFileSelected,
   helperText = 'Tap to browse files',
-  label = 'Import Flighty .CSV',
+  label = 'Import Flighty data',
   actionLabel = 'Where do I find my data?',
   className,
   isLoading,
@@ -48,7 +48,7 @@ export function UploadCard({
               {isLoading ? 'Uploading...' : label}
             </p>
             <p className="mt-1 text-sm text-slate-600">
-              {isLoading ? 'Parsing CSV locally' : helperText}
+              {isLoading ? 'Parsing locally' : helperText}
             </p>
           </div>
         </div>

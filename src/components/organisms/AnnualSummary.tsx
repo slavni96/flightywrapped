@@ -5,9 +5,11 @@ import { StatCard } from '../molecules/StatCard';
 
 type AnnualSummaryProps = {
   stats: FlightStats;
+  scopeLabel?: string;
+  subtitleText?: string;
 };
 
-export function AnnualSummary({ stats }: AnnualSummaryProps) {
+export function AnnualSummary({ stats, scopeLabel, subtitleText }: AnnualSummaryProps) {
   return (
     <section
       id="stats"
@@ -22,9 +24,9 @@ export function AnnualSummary({ stats }: AnnualSummaryProps) {
         <div className="flex flex-col items-center gap-3 text-center">
           <SectionHeader
             align="center"
-            eyebrow={`${stats.firstYear ?? '—'} In The Air`}
+            eyebrow={scopeLabel ?? `${stats.firstYear ?? '—'} In The Air`}
             title={`${stats.flights} Flights`}
-            subtitle="Your year at a glance—miles, time, and routes ready to share."
+            subtitle={subtitleText ?? 'Your year at a glance—miles, time, and routes ready to share.'}
           />
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
             {stats.airlines} airlines • {stats.routes} routes • {stats.airports} airports
@@ -46,10 +48,10 @@ export function AnnualSummary({ stats }: AnnualSummaryProps) {
 
           <div className="grid w-full gap-4 sm:grid-cols-2">
             <StatCard icon="schedule" title={`${stats.totalHours}h`} subtitle="Total Time">
-              Calculated locally from your timestamps.
+              Calculated locally for you.
             </StatCard>
             <StatCard icon="flight_takeoff" title={`${stats.flights}`} subtitle="Flights">
-              Directly counted from your CSV rows.
+              Directly counted from your trips.
             </StatCard>
           </div>
         </div>

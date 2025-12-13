@@ -12,7 +12,7 @@ export function HowItWorks() {
         <SectionHeader
           eyebrow="Guided flow"
           title="How it works"
-          subtitle="Three steps from CSV to insights. Export, upload, get your wrapped."
+          subtitle="Three steps to your insights. Export, upload, get your wrapped."
         />
       </div>
       <div className="grid gap-4 lg:grid-cols-2">
