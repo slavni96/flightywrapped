@@ -11,17 +11,9 @@ export function Footer() {
             <p className="text-slate-900">© 2025</p>
           </div>
         </div>
-        <div className="flex items-center gap-6">
-          <a href="#" className="hover:text-primary">
-            About
-          </a>
-          <a href="#" className="hover:text-primary">
-            Privacy
-          </a>
-          <a href="#" className="hover:text-primary">
-            Creator
-          </a>
-        </div>
+        <a href="https://slavni96.github.io/" className="hover:text-primary">
+          Creator
+        </a>
       </div>
     </footer>
   );
