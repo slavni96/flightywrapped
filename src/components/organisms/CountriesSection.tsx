@@ -50,8 +50,13 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
 
     if (coords.length) {
       const bounds = L.latLngBounds(coords.map((c) => [c.pos.lat, c.pos.lon]));
-      map.fitBounds(bounds.pad(0.2));
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 5 });
+    } else {
+      map.setView([50, 10], 3);
     }
+
+    // Ensure proper sizing on mount (especially mobile)
+    setTimeout(() => map.invalidateSize(), 100);
 
     coords.forEach(({ code, pos }) => {
       L.circleMarker([pos.lat, pos.lon], {
