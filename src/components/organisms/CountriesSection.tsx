@@ -24,8 +24,8 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
   useEffect(() => {
     if (!mapRef.current) return;
     const map = L.map(mapRef.current, {
-      center: [20, 0],
-      zoom: 2,
+      center: [50, 10], // center over Europe by default
+      zoom: 3,
       zoomControl: true,
       scrollWheelZoom: false,
       dragging: true,
