@@ -7,7 +7,7 @@ type FloatingShareProps = {
 
 export function FloatingShare({ onShare }: FloatingShareProps) {
   return (
-    <div className="fixed bottom-24 right-6 z-40 md:bottom-16">
+    <div className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 md:bottom-16 md:left-auto md:right-6 md:translate-x-0">
       <Button
         variant="primary"
         icon={<Icon name="ios_share" />}
