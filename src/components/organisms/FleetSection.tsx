@@ -44,6 +44,8 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
                 alt={plane.model}
                 className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-105"
                 style={{ objectPosition: index === 0 ? '50% 50%' : '100% 100%' }}
+                crossOrigin="anonymous"
+                referrerPolicy="no-referrer"
                 loading="lazy"
               />
               <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-between p-5">
