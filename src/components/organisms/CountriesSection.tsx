@@ -31,8 +31,10 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
       mapInstance.current = null;
     }
 
+    const renderer = L.canvas({ padding: 0.5 });
+
     const map = L.map(mapRef.current, {
-      center: [42.5, 12.5],
+      center: [50, 12.5],
       zoom: 4,
       zoomControl: true,
       scrollWheelZoom: false,
@@ -40,6 +42,7 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
       doubleClickZoom: false,
       attributionControl: false,
       worldCopyJump: true,
+      renderer,
     });
     map.zoomControl.setPosition('topright');
 
@@ -60,6 +63,7 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
         weight: 2,
         fillColor: '#137fec',
         fillOpacity: 0.85,
+        renderer,
       })
         .addTo(map)
         .bindTooltip(airportLabel(code), { direction: 'top' });
