@@ -26,13 +26,16 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
     const map = L.map(mapRef.current, {
       center: [20, 0],
       zoom: 2,
-      zoomControl: false,
+      zoomControl: true,
       scrollWheelZoom: false,
       dragging: true,
       doubleClickZoom: false,
       attributionControl: false,
       worldCopyJump: true,
     });
+
+    // Place zoom controls on the top-right to avoid badges
+    map.zoomControl.setPosition('topright');
 
     const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     L.tileLayer(tileUrl, {
