@@ -41,6 +41,7 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
     L.tileLayer(tileUrl, {
       minZoom: 2,
       maxZoom: 6,
+      crossOrigin: true,
     }).addTo(map);
 
     const coords = stats.airportCodes

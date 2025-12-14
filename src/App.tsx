@@ -55,7 +55,7 @@ function App() {
       if (!section) {
         throw new Error('Section not found');
       }
-      const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2 });
+      const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2, useCORS: true });
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) {
         throw new Error('Unable to capture image');
