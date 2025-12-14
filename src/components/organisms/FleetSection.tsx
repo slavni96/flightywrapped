@@ -42,7 +42,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
               <img
                 src={plane.image}
                 alt={plane.model}
-                className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-105"
+                className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-105 export-hide"
                 style={{ objectPosition: index === 0 ? '50% 50%' : '50% 55%' }}
                 crossOrigin="anonymous"
                 referrerPolicy="no-referrer"

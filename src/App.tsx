@@ -77,6 +77,7 @@ function App() {
             img.style.objectFit = 'cover';
             img.style.zIndex = '5';
             img.setAttribute('data-export-map', 'true');
+            img.classList.add('export-map-overlay');
             mapContainer.appendChild(img);
             resolveCleanup();
           });

@@ -6,6 +6,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Export helpers */
+.export-hide {
+  display: block;
+}
+.export-mode .export-hide {
+  display: none;
+}
+.export-map-overlay {
+  pointer-events: none;
+}
+
 @layer base {
   * {
     @apply box-border;
