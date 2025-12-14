@@ -6,6 +6,17 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Hide/show layers during export */
+.export-only {
+  display: none;
+}
+.export-mode .export-only {
+  display: block;
+}
+.export-mode .live-map {
+  display: none;
+}
+
 @layer base {
   * {
     @apply box-border;

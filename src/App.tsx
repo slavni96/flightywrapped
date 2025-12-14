@@ -55,7 +55,10 @@ function App() {
       if (!section) {
         throw new Error('Section not found');
       }
-      const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2, useCORS: true });
+      document.body.classList.add('export-mode');
+      // Wait for images (map, fleet photos) to settle before capture
+      await new Promise((resolve) => setTimeout(resolve, 400));
+      const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2, useCORS: true, logging: false });
       const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
       if (!blob) {
         throw new Error('Unable to capture image');
@@ -76,6 +79,8 @@ function App() {
     } catch (err) {
       console.error(err);
       setError('Unable to share right now.');
+    } finally {
+      document.body.classList.remove('export-mode');
     }
   };
 
@@ -228,6 +233,12 @@ function App() {
       });
     }
   }, [isInsights, slides.length, storyIndex]);
+
+  useEffect(() => {
+    if (isInsights) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [isInsights]);
 
   return (
     <div className="min-h-screen flex flex-col">
