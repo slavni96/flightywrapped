@@ -1,5 +1,8 @@
 import Papa, { type ParseError, type ParseResult } from 'papaparse';
+import tzLookup from 'tz-lookup';
+import { DateTime } from 'luxon';
 import { type FlightRecord, type FlightStats } from '../types/flight';
+import { getAirport } from './airportLookup';
 
 type CsvRow = Record<string, string>;
 
@@ -31,15 +34,36 @@ const parseDateValue = (value?: string) => {
   return Number.isNaN(parsed) ? null : parsed;
 };
 
+const zoneForAirport = (code?: string) => {
+  const info = getAirport(code);
+  if (info?.latitude != null && info?.longitude != null) {
+    try {
+      return tzLookup(info.latitude, info.longitude);
+    } catch (e) {
+      console.warn('Unable to resolve timezone for', code, e);
+    }
+  }
+  return undefined;
+};
+
+const parseLocalToUtc = (value?: string, code?: string) => {
+  if (!value) return null;
+  const zone = zoneForAirport(code) ?? 'UTC';
+  const dt = DateTime.fromISO(value, { zone });
+  if (!dt.isValid) return null;
+  return dt.toUTC().toMillis();
+};
+
 const computeDurationMinutes = (record: FlightRecord) => {
   const start =
-    parseDateValue(record.takeoffActual) ??
-    parseDateValue(record.gateDepartureActual) ??
-    parseDateValue(record.date);
+    parseLocalToUtc(record.takeoffActual, record.from) ??
+    parseLocalToUtc(record.gateDepartureActual, record.from) ??
+    parseLocalToUtc(record.date, record.from);
+
   const end =
-    parseDateValue(record.landingActual) ??
-    parseDateValue(record.gateArrivalActual) ??
-    parseDateValue(record.date);
+    parseLocalToUtc(record.landingActual, record.to) ??
+    parseLocalToUtc(record.gateArrivalActual, record.to) ??
+    parseLocalToUtc(record.date, record.to);
 
   if (!start || !end || end < start) return 0;
   return (end - start) / 1000 / 60;

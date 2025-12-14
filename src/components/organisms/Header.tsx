@@ -29,7 +29,7 @@ export function Header({ hasData, onGoHome, onGoInsights, isOnInsights }: Header
         <div className="flex items-center gap-2">
           <a
             href="https://github.com/slavni96/flightywrapped"
-            className="hidden items-center justify-center rounded-full border border-slate-200 bg-white px-2 py-1 text-slate-700 transition hover:bg-slate-100 md:inline-flex"
+            className="inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-2 py-1 text-slate-700 transition hover:bg-slate-100"
             aria-label="GitHub repository"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5">

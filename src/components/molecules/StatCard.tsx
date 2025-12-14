@@ -26,24 +26,26 @@ export function StatCard({
       )}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-white/0 via-white/0 to-primary/5 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
-      <div className="relative z-10 flex flex-col items-start gap-2 text-slate-900">
-        {icon && (
-          <div
-            className={cn(
-              'rounded-full p-2 text-primary',
-              tone === 'primary' ? 'bg-primary/20 text-primary' : 'bg-primary/10 text-primary',
-            )}
-          >
-            <Icon name={icon} className="text-2xl" />
-          </div>
-        )}
-        <div className="flex flex-col gap-1">
-          <span className="text-3xl font-bold leading-none tracking-tight">{title}</span>
-          {subtitle && (
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              {subtitle}
-            </span>
+      <div className="relative z-10 flex flex-col gap-2 text-slate-900">
+        <div className="flex items-center gap-3">
+          {icon && (
+            <div
+              className={cn(
+                'rounded-full p-2 text-primary',
+                tone === 'primary' ? 'bg-primary/20 text-primary' : 'bg-primary/10 text-primary',
+              )}
+            >
+              <Icon name={icon} className="text-2xl" />
+            </div>
           )}
+          <div className="flex flex-col gap-1">
+            <span className="text-3xl font-bold leading-none tracking-tight">{title}</span>
+            {subtitle && (
+              <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                {subtitle}
+              </span>
+            )}
+          </div>
         </div>
         {children && <div className="text-sm text-slate-600">{children}</div>}
       </div>

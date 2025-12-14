@@ -1,6 +1,7 @@
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
+import { formatDuration } from '../../utils/format';
 
 type DurationSectionProps = {
   stats: FlightStats;
@@ -8,15 +9,10 @@ type DurationSectionProps = {
 };
 
 export function DurationSection({ stats, containerId }: DurationSectionProps) {
-  const totalHours = Math.floor(stats.totalMinutes / 60);
-  const totalMins = stats.totalMinutes % 60;
-  const avgHours = Math.floor(stats.averageFlightMinutes / 60);
-  const avgMins = stats.averageFlightMinutes % 60;
-
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <SectionHeader
         align="center"
@@ -25,8 +21,8 @@ export function DurationSection({ stats, containerId }: DurationSectionProps) {
         subtitle="Quick hops to long hauls in one snapshot."
       />
       <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-        <StatCard icon="schedule" title={`${totalHours}h ${totalMins}m`} subtitle="Time in the air">
-          Average flight {avgHours}h {avgMins}m.
+        <StatCard icon="schedule" title={formatDuration(stats.totalMinutes)} subtitle="Time in the air">
+          Average flight {formatDuration(stats.averageFlightMinutes)}.
         </StatCard>
         <StatCard icon="bolt" title={`${stats.durationBuckets.short}`} subtitle="Short hops (&lt;2h)">
           Fastest legs in your year.
@@ -40,7 +36,7 @@ export function DurationSection({ stats, containerId }: DurationSectionProps) {
         {stats.longestFlight && (
           <StatCard
             icon="trending_up"
-            title={`${stats.longestFlight.minutes}m`}
+            title={formatDuration(stats.longestFlight.minutes)}
             subtitle="Longest sector"
           >
             {stats.longestFlight.flight} {stats.longestFlight.from}-{stats.longestFlight.to}
@@ -49,7 +45,7 @@ export function DurationSection({ stats, containerId }: DurationSectionProps) {
         {stats.shortestFlight && (
           <StatCard
             icon="trending_down"
-            title={`${stats.shortestFlight.minutes}m`}
+            title={formatDuration(stats.shortestFlight.minutes)}
             subtitle="Shortest sector"
           >
             {stats.shortestFlight.flight} {stats.shortestFlight.from}-{stats.shortestFlight.to}

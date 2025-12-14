@@ -1,6 +1,8 @@
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
+import { formatDuration } from '../../utils/format';
+import { airlineLabel } from '../../utils/airlineLookup';
 
 type PunctualitySectionProps = {
   stats: FlightStats;
@@ -11,7 +13,7 @@ export function PunctualitySection({ stats, containerId }: PunctualitySectionPro
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <SectionHeader
         align="center"
@@ -36,15 +38,15 @@ export function PunctualitySection({ stats, containerId }: PunctualitySectionPro
         </StatCard>
         <StatCard
           icon="timer"
-          title={`${stats.averageDelayMinutes}m`}
+          title={formatDuration(stats.averageDelayMinutes)}
           subtitle="Average delay"
         >
-          Total delay accumulated: {stats.totalDelayMinutes} minutes.
+          Total delay accumulated: {formatDuration(stats.totalDelayMinutes)}.
         </StatCard>
         {stats.worstDelay && (
           <StatCard
             icon="warning"
-            title={`${stats.worstDelay.minutes}m`}
+            title={formatDuration(stats.worstDelay.minutes)}
             subtitle="Worst delay"
           >
             {stats.worstDelay.flight} {stats.worstDelay.from}-{stats.worstDelay.to} ({stats.worstDelay.phase})
@@ -53,16 +55,16 @@ export function PunctualitySection({ stats, containerId }: PunctualitySectionPro
         {stats.delayByAirline.length > 0 && (
           <StatCard
             icon="flight_takeoff"
-            title={`${stats.delayByAirline[0].averageDelay}m`}
+            title={formatDuration(stats.delayByAirline[0].averageDelay)}
             subtitle="Most delayed airline"
           >
-            {stats.delayByAirline[0].name} average per delayed flight.
+            {airlineLabel(stats.delayByAirline[0].name)} average per delayed flight.
           </StatCard>
         )}
         {stats.delayByOrigin.length > 0 && (
           <StatCard
             icon="place"
-            title={`${stats.delayByOrigin[0].averageDelay}m`}
+            title={formatDuration(stats.delayByOrigin[0].averageDelay)}
             subtitle="Most delayed airport"
           >
             {stats.delayByOrigin[0].code} average delay on departures/arrivals.

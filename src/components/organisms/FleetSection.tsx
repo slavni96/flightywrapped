@@ -13,7 +13,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
   return (
     <section
       id={containerId}
-      className="rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <div className="flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
@@ -44,7 +44,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
               />
               <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-between p-5">
                 <div className="flex items-start justify-between">
-                  <span className="rounded-full border border-primary/30 bg-primary/15 px-2 py-1 text-xs font-bold uppercase tracking-wider text-primary">
+                  <span className="rounded-full border border-white/70 bg-white/80 px-2 py-1 text-xs font-bold uppercase tracking-wider text-primary">
                     {index === 0 ? 'First flight on record' : 'Most flown type'}
                   </span>
                   <span className="font-mono text-sm text-white/80">

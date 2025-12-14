@@ -1,6 +1,8 @@
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
+import { formatDuration } from '../../utils/format';
+import { airlineLabel } from '../../utils/airlineLookup';
 
 type DisruptionSectionProps = {
   stats: FlightStats;
@@ -11,7 +13,7 @@ export function DisruptionSection({ stats, containerId }: DisruptionSectionProps
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <SectionHeader
         align="center"
@@ -26,16 +28,16 @@ export function DisruptionSection({ stats, containerId }: DisruptionSectionProps
         <StatCard icon="alt_route" title={`${stats.diverted}`} subtitle="Diversions">
           Re-routed journeys captured here.
         </StatCard>
-        <StatCard icon="speed" title={`${stats.totalDelayMinutes}m`} subtitle="Total delay time">
-          Average delay: {stats.averageDelayMinutes} minutes.
+        <StatCard icon="speed" title={formatDuration(stats.totalDelayMinutes)} subtitle="Total delay time">
+          Average delay: {formatDuration(stats.averageDelayMinutes)}.
         </StatCard>
         {stats.delayByAirline.length > 1 && (
           <StatCard
             icon="travel_explore"
-            title={`${stats.delayByAirline[1].averageDelay}m`}
+            title={formatDuration(stats.delayByAirline[1].averageDelay)}
             subtitle="Another airline delay avg."
           >
-            {stats.delayByAirline[1].name} averaged per delayed flight.
+            {airlineLabel(stats.delayByAirline[1].name)} averaged per delayed flight.
           </StatCard>
         )}
       </div>

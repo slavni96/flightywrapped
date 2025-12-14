@@ -1,6 +1,7 @@
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { Icon } from '../atoms/Icon';
+import { airlineLabel } from '../../utils/airlineLookup';
 
 type AirlineSectionProps = {
   stats: FlightStats;
@@ -13,7 +14,7 @@ export function AirlineSection({ stats, containerId }: AirlineSectionProps) {
   return (
     <section
       id={containerId}
-      className="rounded-3xl border border-white/70 bg-white p-6 text-slate-900 shadow-card lg:p-10 max-w-3xl mx-auto"
+      className="rounded-3xl border border-white/70 bg-white p-6 text-slate-900 shadow-card lg:p-10 max-w-6xl w-full mx-auto"
     >
       <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
         <SectionHeader
@@ -37,7 +38,7 @@ export function AirlineSection({ stats, containerId }: AirlineSectionProps) {
                         Top airline
                       </p>
                       <h3 className="text-2xl font-bold text-slate-900 leading-none">
-                        {topAirline.name}
+                        {airlineLabel(topAirline.name)}
                       </h3>
                       <p className="text-sm text-slate-600">Most frequent in your trips</p>
                     </div>
@@ -67,7 +68,7 @@ export function AirlineSection({ stats, containerId }: AirlineSectionProps) {
                 return (
                   <div key={airline.name} className="space-y-2">
                     <div className="flex items-end justify-between">
-                      <span className="font-semibold text-slate-900">{airline.name}</span>
+                      <span className="font-semibold text-slate-900">{airlineLabel(airline.name)}</span>
                       <span className="text-sm text-slate-600">{airline.flights} flights</span>
                     </div>
                     <div className="h-3 w-full overflow-hidden rounded-full bg-slate-100">

@@ -1,6 +1,8 @@
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { StatCard } from '../molecules/StatCard';
+import { formatDuration } from '../../utils/format';
+import { airlineLabel } from '../../utils/airlineLookup';
 
 type AnnualSummaryProps = {
   stats: FlightStats;
@@ -10,15 +12,10 @@ type AnnualSummaryProps = {
 };
 
 export function AnnualSummary({ stats, scopeLabel, subtitleText, containerId }: AnnualSummaryProps) {
-  const totalHours = Math.floor(stats.totalMinutes / 60);
-  const totalMins = stats.totalMinutes % 60;
-  const avgHours = Math.floor(stats.averageFlightMinutes / 60);
-  const avgMins = stats.averageFlightMinutes % 60;
-
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <SectionHeader
         align="center"
@@ -34,27 +31,27 @@ export function AnnualSummary({ stats, scopeLabel, subtitleText, containerId }: 
         <StatCard icon="flight_takeoff" title={`${stats.flights}`} subtitle="Flights">
           Across {stats.routes} routes and {stats.airports} airports.
         </StatCard>
-        <StatCard icon="schedule" title={`${totalHours}h ${totalMins}m`} subtitle="Total time">
-          Average flight: {avgHours}h {avgMins}m.
+        <StatCard icon="schedule" title={formatDuration(stats.totalMinutes)} subtitle="Total time">
+          Average flight: {formatDuration(stats.averageFlightMinutes)}.
         </StatCard>
         {stats.shortestFlight && (
-          <StatCard icon="trending_down" title={`${stats.shortestFlight.minutes}m`} subtitle="Shortest flight">
+          <StatCard icon="trending_down" title={formatDuration(stats.shortestFlight.minutes)} subtitle="Shortest flight">
             {stats.shortestFlight.flight} {stats.shortestFlight.from}-{stats.shortestFlight.to}
           </StatCard>
         )}
         {stats.longestFlight && (
-          <StatCard icon="trending_up" title={`${stats.longestFlight.minutes}m`} subtitle="Longest flight">
+          <StatCard icon="trending_up" title={formatDuration(stats.longestFlight.minutes)} subtitle="Longest flight">
             {stats.longestFlight.flight} {stats.longestFlight.from}-{stats.longestFlight.to}
           </StatCard>
         )}
         {stats.topAirlineByTime && (
-          <StatCard icon="workspace_premium" title={`${Math.round(stats.topAirlineByTime.minutes / 60)}h`} subtitle="Most time on">
-            {stats.topAirlineByTime.name}
+          <StatCard icon="workspace_premium" title={formatDuration(stats.topAirlineByTime.minutes)} subtitle="Most time on">
+            {airlineLabel(stats.topAirlineByTime.name)}
           </StatCard>
         )}
         {stats.topAirlines.length > 0 && (
           <StatCard icon="groups" title={`${stats.airlines}`} subtitle="Airlines flown">
-            Top carrier: {stats.topAirlines[0].name} ({stats.topAirlines[0].flights} flights)
+            Top carrier: {airlineLabel(stats.topAirlines[0].name)} ({stats.topAirlines[0].flights} flights)
           </StatCard>
         )}
       </div>

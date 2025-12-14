@@ -18,7 +18,7 @@ export function FrequencySection({ stats, containerId }: FrequencySectionProps) 
   return (
     <section
       id={containerId}
-      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-3xl mx-auto"
+      className="overflow-hidden rounded-3xl border border-white/70 bg-white p-4 text-slate-900 shadow-card sm:p-6 lg:p-8 max-w-6xl w-full mx-auto"
     >
       <SectionHeader
         align="center"

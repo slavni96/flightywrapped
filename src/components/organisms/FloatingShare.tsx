@@ -14,7 +14,7 @@ export function FloatingShare({ onShare }: FloatingShareProps) {
         onClick={onShare}
         className="px-4 shadow-lg shadow-primary/30"
       >
-        Share to Social
+        Share as image
       </Button>
     </div>
   );

@@ -229,14 +229,14 @@ function App() {
   }, [isInsights, slides.length, storyIndex]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col">
       <Header
         hasData={Boolean(statsAll || Object.keys(statsByYear).length)}
         onGoHome={goHome}
         onGoInsights={goInsights}
         isOnInsights={isInsights}
       />
-      <main className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pb-16 pt-6 md:px-6 lg:px-8">
+      <main className="mx-auto flex max-w-6xl flex-1 flex-col gap-10 px-4 pb-16 pt-6 md:px-6 lg:px-8 w-full">
         {view === 'landing' && (
           <>
             <Hero onStart={scrollToUpload} />
