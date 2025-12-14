@@ -21,6 +21,8 @@ import { DurationSection } from './components/organisms/DurationSection';
 import { DisruptionSection } from './components/organisms/DisruptionSection';
 import './index.css';
 import confetti from 'canvas-confetti';
+// @ts-expect-error leaflet-image has no types
+import leafletImage from 'leaflet-image';
 
 type View = 'landing' | 'insights';
 
@@ -55,7 +57,32 @@ function App() {
       if (!section) {
         throw new Error('Section not found');
       }
-      document.body.classList.add('export-mode');
+      // If we have a Leaflet map, rasterize it to keep markers/tiles in the export
+      const mapInstance = (window as any).__flightyMap;
+      if (mapInstance) {
+        await new Promise<void>((resolveCleanup) => {
+          leafletImage(mapInstance, (err: unknown, mapCanvas: HTMLCanvasElement) => {
+            if (err) {
+              resolveCleanup();
+              return;
+            }
+            const mapContainer = mapInstance.getContainer() as HTMLElement;
+            const img = document.createElement('img');
+            img.src = mapCanvas.toDataURL('image/png');
+            img.alt = 'map snapshot';
+            img.style.position = 'absolute';
+            img.style.inset = '0';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'cover';
+            img.style.zIndex = '5';
+            img.setAttribute('data-export-map', 'true');
+            mapContainer.appendChild(img);
+            resolveCleanup();
+          });
+        });
+      }
+
       // Wait for images (map, fleet photos) to settle before capture
       await new Promise((resolve) => setTimeout(resolve, 400));
       const canvas = await html2canvas(section, { backgroundColor: '#ffffff', scale: 2, useCORS: true, logging: false });
@@ -80,7 +107,13 @@ function App() {
       console.error(err);
       setError('Unable to share right now.');
     } finally {
-      document.body.classList.remove('export-mode');
+      // clean up any map snapshot overlay
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mapInstance = (window as any).__flightyMap;
+      if (mapInstance) {
+        const container = mapInstance.getContainer() as HTMLElement;
+        container.querySelectorAll('[data-export-map="true"]').forEach((node) => node.remove());
+      }
     }
   };
 

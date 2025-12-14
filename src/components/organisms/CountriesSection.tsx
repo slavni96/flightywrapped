@@ -10,8 +10,6 @@ type CountriesSectionProps = {
   containerId?: string;
 };
 
-const MAP_IMAGE = `${import.meta.env.BASE_URL}world-map-2x1.png`;
-
 const positionForCode = (code: string) => {
   const info = getAirport(code);
   if (info?.latitude != null && info?.longitude != null) {
@@ -24,17 +22,17 @@ const positionForCode = (code: string) => {
 
 export function CountriesSection({ stats, containerId }: CountriesSectionProps) {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const layerRef = useRef<L.Map | null>(null);
+  const mapInstance = useRef<L.Map | null>(null);
 
   useEffect(() => {
     if (!mapRef.current) return;
-    if (layerRef.current) {
-      layerRef.current.remove();
-      layerRef.current = null;
+    if (mapInstance.current) {
+      mapInstance.current.remove();
+      mapInstance.current = null;
     }
 
     const map = L.map(mapRef.current, {
-      center: [42.5, 12.5], // Italy/Europe
+      center: [42.5, 12.5],
       zoom: 4,
       zoomControl: true,
       scrollWheelZoom: false,
@@ -45,8 +43,7 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
     });
     map.zoomControl.setPosition('topright');
 
-    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-    L.tileLayer(tileUrl, {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       minZoom: 2,
       maxZoom: 6,
       crossOrigin: true,
@@ -71,15 +68,16 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
     if (coords.length) {
       const bounds = L.latLngBounds(coords.map((c) => [c.pos.lat, c.pos.lon]));
       map.fitBounds(bounds, { padding: [40, 40], maxZoom: 6 });
-    } else {
-      map.setView([42.5, 12.5], 4);
     }
 
     setTimeout(() => map.invalidateSize(), 150);
-    layerRef.current = map;
+    mapInstance.current = map;
+    (window as any).__flightyMap = map;
+
     return () => {
       map.remove();
-      layerRef.current = null;
+      mapInstance.current = null;
+      (window as any).__flightyMap = null;
     };
   }, [stats.airportCodes]);
 
@@ -100,30 +98,7 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
             {stats.routes} routes mapped
           </Badge>
           <div className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-inner h-[340px] md:h-[480px]">
-            <div ref={mapRef} className="absolute inset-0 h-full w-full live-map" />
-            {/* Static overlay used during export to ensure markers remain visible */}
-            <div className="absolute inset-0 hidden export-only">
-              <img
-                src={MAP_IMAGE}
-                alt="World map background"
-                className="h-full w-full object-contain"
-                loading="lazy"
-              />
-              {stats.airportCodes.map((code) => {
-                const pos = positionForCode(code);
-                const label = airportLabel(code);
-                if (!pos) return null;
-                return (
-                  <span
-                    key={code}
-                    className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_14px_rgba(19,127,236,0.55)] ring-2 ring-white/80"
-                    style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                    title={label}
-                    aria-label={label}
-                  />
-                );
-              })}
-            </div>
+            <div ref={mapRef} className="absolute inset-0 h-full w-full" />
             <div className="pointer-events-none absolute inset-0 rounded-2xl border border-primary/25 shadow-[inset_0_0_0_1px_rgba(19,127,236,0.08)]" />
           </div>
           <p className="text-center text-slate-600">
