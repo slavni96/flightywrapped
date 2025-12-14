@@ -10,6 +10,8 @@ type FleetSectionProps = {
 };
 
 export function FleetSection({ stats, containerId }: FleetSectionProps) {
+  const topAircraftLabel = stats.topAircraft ?? fleet.newest.model;
+
   return (
     <section
       id={containerId}
@@ -37,10 +39,12 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
               className="group relative overflow-hidden rounded-2xl border border-white/70 bg-white"
             >
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-              <div
-                className="absolute inset-0 bg-cover bg-center opacity-60 transition-transform duration-500 group-hover:scale-105"
-                style={{ backgroundImage: `url(${plane.image})` }}
-                aria-label={plane.model}
+              <img
+                src={plane.image}
+                alt={plane.model}
+                className="absolute inset-0 h-full w-full object-cover opacity-60 transition-transform duration-500 group-hover:scale-105"
+                style={{ objectPosition: index === 0 ? '50% 50%' : '100% 100%' }}
+                loading="lazy"
               />
               <div className="relative z-10 flex h-full min-h-[220px] flex-col justify-between p-5">
                 <div className="flex items-start justify-between">
@@ -58,7 +62,7 @@ export function FleetSection({ stats, containerId }: FleetSectionProps) {
                     {index === 0 ? 'Oldest flown' : 'Most modern'}
                   </p>
                   <h3 className="text-2xl font-bold leading-tight text-white">
-                    {index === 0 ? plane.model : stats.topAircraft ?? plane.model}
+                    {index === 0 ? plane.model : topAircraftLabel}
                   </h3>
                   <p className="text-sm text-white/70">{plane.year}</p>
                 </div>
