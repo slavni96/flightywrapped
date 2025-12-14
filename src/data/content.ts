@@ -50,14 +50,12 @@ export const fleet = {
   oldest: {
     year: 1984,
     model: 'Boeing 737-200',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCJeOh5lLV4wnOkUYVcfBfEmTfimSR0YlLJejUxcpPT1J2rmY1s9CYhQwu8W8ge-PRLCgyZKwV5emI28UiPunNSu8tc2juUgqRbQ915rrDOxk1zilb9h9c9U4ZTwVrw0AoqR2mkVUytzcOcVASXthJdiyGE3gyEp4sYKEkTcCjzMW7GoEYz3MUsIKIhn9nieRmBqkneRyYmiLhDdaON7o6OrO8bTf7MH1vfeF6cDbRxO8SRgq0aHiCbJd6XxOFw78uJwpBPKTucI6V3',
+    image: `${import.meta.env.BASE_URL}fleet-oldest.jpg`,
   },
   newest: {
     year: 2023,
     model: 'Airbus A350-900',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDuYJt_uPJ871ofoONbrQzAhFW5lvcaDxyicKBE3azysONseXYJpBq2nMyCltrEMsXBGw3ynhwgJFlgPc-tOBS7sIuYDgDxAdqo7yWeaPUz2mQLTI66VFjhOzm-WJm7JngfR-zFlAGS9OfeTlD47ESZT-nn19OVLU5MJYxE3B_u6lR-aEnsbIsAGjpyXQJ11hUgqYrSCmYWwzCrfus9rXvZs95M7O3srS9oceL9h-8-6PIRIt6rqbmWC4vwzJ84dOBK5swU4CsNTKWE',
+    image: `${import.meta.env.BASE_URL}fleet-newest.jpg`,
   },
   manufacturers: [
     { name: 'Boeing', types: 12, share: 52, tone: 'primary' },
