@@ -201,6 +201,7 @@ function App() {
       setView('insights');
       setStoryIndex(0);
       focusInsightsSection();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
