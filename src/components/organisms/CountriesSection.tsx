@@ -1,9 +1,9 @@
+import { useEffect, useRef } from 'react';
+import L from 'leaflet';
 import { type FlightStats } from '../../types/flight';
 import { SectionHeader } from '../molecules/SectionHeader';
 import { Badge } from '../atoms/Badge';
 import { airportLabel, getAirport } from '../../utils/airportLookup';
-
-const MAP_IMAGE = `${import.meta.env.BASE_URL}world-map-2x1.png`;
 
 type CountriesSectionProps = {
   stats: FlightStats;
@@ -13,22 +13,59 @@ type CountriesSectionProps = {
 const positionForCode = (code: string) => {
   const info = getAirport(code);
   if (info?.latitude != null && info?.longitude != null) {
-    const x = ((info.longitude + 180) / 360) * 100;
-    const y = ((90 - info.latitude) / 180) * 100;
-    return { x: Math.max(1, Math.min(99, x)), y: Math.max(1, Math.min(99, y)) };
+    return { lat: info.latitude, lon: info.longitude };
   }
-
-  // Fallback deterministic spread if coordinates are missing
-  const normalized = code.padEnd(2, 'X').slice(0, 2).toUpperCase();
-  const letterValue = (ch: string) => Math.max(0, Math.min(25, ch.charCodeAt(0) - 65));
-  const lon = (letterValue(normalized[0]) / 25) * 360 - 180;
-  const lat = 90 - (letterValue(normalized[1]) / 25) * 180;
-  const x = ((lon + 180) / 360) * 100;
-  const y = ((90 - lat) / 180) * 100;
-  return { x: Math.max(1, Math.min(99, x)), y: Math.max(1, Math.min(99, y)) };
+  return undefined;
 };
 
 export function CountriesSection({ stats, containerId }: CountriesSectionProps) {
+  const mapRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!mapRef.current) return;
+    const map = L.map(mapRef.current, {
+      center: [20, 0],
+      zoom: 2,
+      zoomControl: false,
+      scrollWheelZoom: false,
+      dragging: true,
+      doubleClickZoom: false,
+      attributionControl: false,
+      worldCopyJump: true,
+    });
+
+    const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    L.tileLayer(tileUrl, {
+      minZoom: 2,
+      maxZoom: 6,
+    }).addTo(map);
+
+    const coords = stats.airportCodes
+      .map((code) => ({ code, pos: positionForCode(code) }))
+      .filter((c): c is { code: string; pos: { lat: number; lon: number } } => Boolean(c.pos));
+
+    if (coords.length) {
+      const bounds = L.latLngBounds(coords.map((c) => [c.pos.lat, c.pos.lon]));
+      map.fitBounds(bounds.pad(0.2));
+    }
+
+    coords.forEach(({ code, pos }) => {
+      L.circleMarker([pos.lat, pos.lon], {
+        radius: 6,
+        color: '#137fec',
+        weight: 2,
+        fillColor: '#137fec',
+        fillOpacity: 0.85,
+      })
+        .addTo(map)
+        .bindTooltip(airportLabel(code), { direction: 'top' });
+    });
+
+    return () => {
+      map.remove();
+    };
+  }, [stats.airportCodes]);
+
   return (
     <section
       id={containerId}
@@ -45,29 +82,9 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
           <Badge tone="primary" className="bg-primary/20 text-primary">
             {stats.routes} routes mapped
           </Badge>
-          <div className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-inner">
-            <div className="relative aspect-[2/1] w-full">
-              <img
-                src={MAP_IMAGE}
-                alt="World map background"
-                className="absolute inset-0 h-full w-full object-fill"
-                loading="lazy"
-              />
-            </div>
-            <div className="pointer-events-none absolute inset-3 rounded-2xl border border-primary/25 shadow-[inset_0_0_0_1px_rgba(19,127,236,0.08)]" />
-            {stats.airportCodes.map((code) => {
-              const { x, y } = positionForCode(code);
-              const label = airportLabel(code);
-              return (
-                <span
-                  key={code}
-                  className="absolute h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary shadow-[0_0_14px_rgba(19,127,236,0.55)] ring-2 ring-white/80"
-                  style={{ left: `${x}%`, top: `${y}%` }}
-                  title={label}
-                  aria-label={label}
-                />
-              );
-            })}
+          <div className="relative w-full overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 shadow-inner aspect-[2/1]">
+            <div ref={mapRef} className="absolute inset-0 h-full w-full" />
+            <div className="pointer-events-none absolute inset-0 rounded-2xl border border-primary/25 shadow-[inset_0_0_0_1px_rgba(19,127,236,0.08)]" />
           </div>
           <p className="text-center text-slate-600">
             That’s your reach based on unique airport codes.
