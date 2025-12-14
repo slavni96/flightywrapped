@@ -23,15 +23,17 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
 
   useEffect(() => {
     if (!mapRef.current) return;
+    const renderer = L.svg();
     const map = L.map(mapRef.current, {
-      center: [50, 10], // center over Europe by default
-      zoom: 3,
+      center: [42.5, 12.5], // center over Italy/Europe by default
+      zoom: 4,
       zoomControl: true,
       scrollWheelZoom: false,
       dragging: true,
       doubleClickZoom: false,
       attributionControl: false,
       worldCopyJump: true,
+      renderer,
     });
 
     // Place zoom controls on the top-right to avoid badges
@@ -50,9 +52,9 @@ export function CountriesSection({ stats, containerId }: CountriesSectionProps) 
 
     if (coords.length) {
       const bounds = L.latLngBounds(coords.map((c) => [c.pos.lat, c.pos.lon]));
-      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 5 });
+      map.fitBounds(bounds, { padding: [40, 40], maxZoom: 6 });
     } else {
-      map.setView([50, 10], 3);
+      map.setView([42.5, 12.5], 4);
     }
 
     // Ensure proper sizing on mount (especially mobile)
